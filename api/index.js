@@ -1,5 +1,20 @@
 import express from 'express';
-const PORT=3001;
+import mongoose from 'mongoose';
+import dotenv from "dotenv"  
+dotenv.config();
+
+mongoose
+  .connect(process.env.MONGO)
+  .then(()=>{
+    console.log("mongodb connected")
+  })
+  .catch((err)=>{
+    console.log(err);
+  })
+
+
+
+const PORT=3000;
 const app=express();
 
 app.listen(PORT, ()=>{
