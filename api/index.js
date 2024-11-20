@@ -27,4 +27,15 @@ app.listen(PORT, ()=>{
 app.use("/api/user",userRouter);
 app.use("/api/auth", authRouter)
 
+// MIDDLEWARES --> to handle the errors
+app.use((err,req,res,next)=>{
+    const statusCode=err.statusCode || 500;
+    const message = err.message || 'internal server error'
+    return res.status(statusCode).json({
+        success: false,
+        message,
+        statusCode
+    })
+})
+
 // here we are also going to create a proxy so we don't have to change the port again again in order to see the api response
