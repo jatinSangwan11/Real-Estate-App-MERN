@@ -1,28 +1,20 @@
 import User from '../models/user.model.js'
 import bcryptjs from 'bcryptjs'
 import { errorHandler } from '../utils/error.js';
-export const signup = async(req, res, next)=>{
-//    console.log(req.body); to check the data coming from the body 
-  const {username,email,password} = req.body;
-  const hashedPassword= bcryptjs.hashSync(password,10);
-  const newUser = new User({username, email,password: hashedPassword});
-  
-  // if the someone sends the same username or email so to throw the error we use try and catch
-  
-  // THIS SHOULD BE HANDLED USING MIDDLEWARE in index.js file
-  try{
+export const signup = async (req, res, next) => {
+  const { username, email, password } = req.body;
+  const hashedPassword = bcryptjs.hashSync(password, 10);
+  const newUser = new User({ username, email, password: hashedPassword });
+  try {
     await newUser.save();
-
     res.status(201).json({
-    message: "new user created"
-  })
-  }catch(err){
-     next(err)
+      message: "user created!!"
+    });
+  } catch (error) {
+    next(error);
   }
-  
+};
  
-}
-
 
 
 // we want to save the data from the body to database
